@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="96bccce1-45fc-4c86-90c0-a80918d132bd">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="248"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="744"/>
+	<subDataset name="ciudad" uuid="72faccbd-cdf8-46cc-a603-11752f2f7ad4">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="prueba"/>
+		<parameter name="fecha_inicio" class="java.lang.String"/>
+		<parameter name="fecha_fin" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT COUNT( prueba.ventas.ciudad_compra) AS Ciudad,
+	ciudad_compra
+FROM prueba.ventas
+WHERE 
+	 prueba.ventas.fecha_venta BETWEEN  $P{fecha_inicio}  AND $P{fecha_fin} 
+GROUP BY prueba.ventas.ciudad_compra]]>
+		</queryString>
+		<field name="Ciudad" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="Ciudad"/>
+			<property name="com.jaspersoft.studio.field.label" value="Ciudad"/>
+		</field>
+		<field name="ciudad_compra" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ciudad_compra"/>
+			<property name="com.jaspersoft.studio.field.label" value="ciudad_compra"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ventas"/>
+		</field>
+	</subDataset>
+	<parameter name="fecha_inicio" class="java.lang.String"/>
+	<parameter name="fecha_fin" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT prueba.ventas.id_venta,
+	prueba.ventas.fecha_venta,
+	prueba.ventas.valor_venta,
+	prueba.productos.nombre_producto
+FROM prueba.ventas 
+	INNER JOIN prueba.productos ON 
+	 prueba.producto.producto_id_producto = prueba.productos.id_producto 
+WHERE 
+	 prueba.ventas.fecha_venta BETWEEN $P{fecha_inicio} AND $P{fecha_fin}]]>
+	</queryString>
+	<field name="id_venta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_venta"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_venta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventas"/>
+	</field>
+	<field name="fecha_venta" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_venta"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_venta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventas"/>
+	</field>
+	<field name="valor_venta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="valor_venta"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_venta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventas"/>
+	</field>
+	<field name="nombre_producto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_producto"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_producto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<group name="PRODUCTO">
+		<groupExpression><![CDATA[$F{nombre_producto}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<rectangle>
+					<reportElement x="-11" y="-4" width="571" height="50" backcolor="#192280" uuid="d802b7e5-dfe1-4a6e-a3a5-46c6ff26e886"/>
+				</rectangle>
+				<textField>
+					<reportElement x="-11" y="0" width="586" height="47" forecolor="#FFFAFA" uuid="a20d8959-35f9-43cd-8af8-5a3bbadd1610"/>
+					<textElement textAlignment="Center">
+						<font size="18" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_producto}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="39"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="-10" width="298" height="90" uuid="cfa804f5-b5ff-42e4-a117-d018892a1aef"/>
+				<textElement textAlignment="Center">
+					<font fontName="Bauhaus 93" size="24"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE VENTAS POR PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="38" width="195" height="42" uuid="71a672c2-8e59-4693-88d8-5332b0a637a1"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Este reporte muestra las ventas por producto realizadas en el periodo seleccionado]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="0" width="102" height="69" uuid="ebfb0e2d-5bee-480c-8185-fb869c823607"/>
+				<imageExpression><![CDATA["https://scontent.fbog4-1.fna.fbcdn.net/v/t1.6435-9/159050725_241684367648759_8234288911542753776_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=8Lrm9alnxQwAX_6_y7j&_nc_ht=scontent.fbog4-1.fna&oh=00_AT9XrdkWJWsBWzW2VG5qV7-Vu-cI8rcYn3AN6TInUngtsQ&oe=62B94EBC"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="17" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-11" y="5" width="571" height="50" forecolor="#050505" backcolor="#4190C4" uuid="eb5ca360-b617-4556-b7ba-7b74e48dee94"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="-6" y="17" width="121" height="30" forecolor="#080101" backcolor="#FFFFFF" uuid="1dff8351-ec00-421e-98a8-1df0d3336059"/>
+				<textElement textAlignment="Center">
+					<font fontName="Berlin Sans FB" size="14"/>
+				</textElement>
+				<text><![CDATA[ID Venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="134" y="17" width="121" height="30" forecolor="#080101" backcolor="#FFFFFF" uuid="62ad640d-64b4-445d-817b-39797300316f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Berlin Sans FB" size="14"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="17" width="121" height="30" forecolor="#080101" backcolor="#FFFFFF" uuid="1658ceb1-2414-4958-b78a-bbcf1d7e2506"/>
+				<textElement textAlignment="Center">
+					<font fontName="Berlin Sans FB" size="14"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="17" width="121" height="30" forecolor="#080101" backcolor="#FFFFFF" uuid="78d6740c-ef4b-487b-a795-391912c58cc8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Berlin Sans FB" size="14"/>
+				</textElement>
+				<text><![CDATA[Valor venta]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="67" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="22" width="100" height="30" uuid="dab117d1-32cc-46be-9063-61122d4e2203"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="134" y="22" width="106" height="30" uuid="700dc504-0f31-4924-b840-f27c877ecd28"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="21" width="100" height="30" uuid="e7edbdf7-10a5-4bad-9411-e8061b59c5b9"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="21" width="100" height="30" uuid="1b1bf9de-d8ca-4de0-8897-afe004eaa26e"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor_venta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="36" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="216" splitType="Stretch">
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="115" y="0" width="275" height="200" uuid="c9b8368e-b21d-4853-99ad-9bb6ea0dcd7e"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset resetType="Report">
+						<datasetRun subDataset="ciudad" uuid="2324d38e-1121-4c70-b40e-9c361fd11d82">
+							<datasetParameter name="fecha_inicio">
+								<datasetParameterExpression><![CDATA[$P{fecha_inicio}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="fecha_fin">
+								<datasetParameterExpression><![CDATA[$P{fecha_fin}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{ciudad_compra}]]></keyExpression>
+					<valueExpression><![CDATA[$F{Ciudad}]]></valueExpression>
+					<labelExpression><![CDATA[$F{Ciudad}.toString()]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement x="370" y="150" width="195" height="42" uuid="b404c8cc-7be6-477c-84c9-bfd839845725"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[El diagrama muestra las ventas realizadas en cada ciudad, en el periodo seleccionado]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
